@@ -13,6 +13,7 @@ import Products from "./components/Products/Products";
 import AuthProvider from "./contexts/AuthProvider";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import {useState , createContext } from 'react';
+import Register from "./components/Login/Register/Register";
 
 
 // create and export context api 
@@ -48,6 +49,9 @@ function App() {
           </Route>
           <Route exact path="/login">
             <Login />
+          </Route>
+          <Route exact path="/register">
+            <Register />
           </Route>
           <PrivateRoute exact path="/placeOrder/:id">
           <PlaceOrder />

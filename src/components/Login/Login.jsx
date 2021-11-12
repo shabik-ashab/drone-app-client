@@ -7,7 +7,7 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-import { Link, useLocation, useHistory} from "react-router-dom";
+import { Link, useLocation, useHistory, NavLink} from "react-router-dom";
 import React, { useState } from 'react';
 import useAuth from "../../hooks/useAuth";
 import img from "../../image/login.jpg";
@@ -64,7 +64,12 @@ const Login = () => {
                 onChange={handleOnChange}
                 variant="standard"
               />
-              <Button sx={{ width: '65%' }} type="submit" variant="contained">Login</Button>
+              <Button sx={{ width: '65%' }} type="submit" className="mb-3 mt-2"variant="contained">Login</Button>
+              <NavLink
+                            style={{ textDecoration: 'none'}}
+                            to="/register">
+                            <Button variant="text">New User? Please Register</Button>
+                        </NavLink>
             </form>
           </div>
           <div className="col-lg-6 col-md-12">
