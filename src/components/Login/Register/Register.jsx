@@ -15,28 +15,29 @@ const Register = () => {
   const history = useHistory();
   const redirect_uri = location.state?.from || "/";
 
-  const { signInUsingGoogle,registerUser,isLoading  } = useAuth();
+  const { signInUsingGoogle,registerUser,isLoading,authError,user } = useAuth();
 
   const handleGoogleLogin = () => {
     signInUsingGoogle().then((result) => {
       history.push(redirect_uri);
     });
   };
-  const handleLoginSubmit = (e) => {
-    if (loginData.password !== loginData.password2) {
-        alert('Your password did not match');
-        return
-    }
-    registerUser(loginData.email, loginData.password,loginData.name);
-    e.preventDefault();
-  };
-  const handleOnChange = (e) => {
+  const handleOnBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
     const newLoginData = { ...loginData };
     newLoginData[field] = value;
     setLoginData(newLoginData);
   };
+  const handleLoginSubmit = (e) => {
+    if (loginData.password !== loginData.password2) {
+        alert('Your password did not match');
+        return
+    }
+    registerUser(loginData.email, loginData.password, loginData.name, history);
+    e.preventDefault();
+  };
+  
   return (
     <div>
       <header>
@@ -52,7 +53,7 @@ const Register = () => {
                             id="standard-basic"
                             label="Your Name"
                             name="name"
-                            
+                            onBlur={handleOnBlur}
                             variant="standard" />
 
               <TextField
@@ -61,7 +62,7 @@ const Register = () => {
                 id="standard-basic"
                 label="Your Email"
                 name="email"
-                onChange={handleOnChange}
+                onBlur={handleOnBlur}
                 variant="standard"
               />
               <TextField
@@ -71,7 +72,7 @@ const Register = () => {
                 label="Your Password"
                 type="password"
                 name="password"
-                onChange={handleOnChange}
+                onBlur={handleOnBlur}
                 variant="standard"
               />
                <TextField
@@ -81,7 +82,7 @@ const Register = () => {
                 label="Confirm Password"
                 type="password"
                 name="password2"
-                onChange={handleOnChange}
+                onBlur={handleOnBlur}
                 variant="standard"
               />
               <Button
@@ -99,6 +100,8 @@ const Register = () => {
 
             }
             {isLoading && <CircularProgress />}
+            {user?.email && <Alert severity="success">User Created successfully!</Alert>}
+                    {authError && <Alert severity="error">{authError}</Alert>}
           </div>
           <div className="col-lg-6 col-md-12">
             <img src={img} className="img-fluid" />

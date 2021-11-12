@@ -8,14 +8,15 @@ initializeAuthentication();
 const useFirebase = () => {
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [authError, setAuthError] = useState('');
 
     const auth = getAuth();
 
-    const registerUser = (email, password, name) => {
+    const registerUser = (email, password, name, history) => {
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // setAuthError('');
+                setAuthError('');
                 const newUser = { email, displayName: name };
                 setUser(newUser);
                 // save user to the database
@@ -26,14 +27,28 @@ const useFirebase = () => {
                 }).then(() => {
                 }).catch((error) => {
                 });
+                history.replace('/');
             })
             .catch((error) => {
-                // setAuthError(error.message);
+                setAuthError(error.message);
                 console.log(error);
             })
             .finally(() => setIsLoading(false));
     }
 
+    const loginUser = (email, password, location, history) => {
+        setIsLoading(true);
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const destination = location?.state?.from || '/';
+                history.replace(destination);
+                setAuthError('');
+            })
+            .catch((error) => {
+                setAuthError(error.message);
+            })
+            .finally(() => setIsLoading(false));
+    }
     const googleProvider = new GoogleAuthProvider();
     const signInUsingGoogle = () => {
         return signInWithPopup(auth, googleProvider)
@@ -66,6 +81,8 @@ const useFirebase = () => {
         isLoading,
         signInUsingGoogle,
         registerUser ,
+        loginUser,
+        authError,
         logOut
     }
 }

@@ -8,7 +8,7 @@ import { CardContext } from '../../App';
 
 const Navbar = (props) => {
     const {user,logOut} = useAuth();
-    // console.log(user);
+    console.log(user);
     // // handleClick function help the state to know page location 
     const {handleClick} = props;
     
@@ -47,8 +47,10 @@ const Navbar = (props) => {
         
       </ul>
       {
-                user.displayName?
-                <p className="usr">{user.displayName} <img src={user.photoURL} className="w-25 p-2" />
+                user.email?
+                <p className="usr d-flex pt-2 me-4"><p className="">
+                  {user?.displayName} <img src={user?.photoURL} className="w-25 p-2" />
+                </p>
                 <Button className="ms-4" onClick={logOut} variant="outline-danger">Logout</Button>
                 </p>
                   :
