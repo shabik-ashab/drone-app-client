@@ -7,7 +7,6 @@ import { CardContext } from '../../App';
 const Products = (props) => {
     // // handleClick function help the state to know page location 
     const {handleClick} = props;
-    console.log(props);
     const [products, setProducts] = useState([]);
     
     // getting the value of card with context api 
