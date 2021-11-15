@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Rating from '@mui/material/Rating';
+import Rating from "@mui/material/Rating";
 
 const Review = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/reviews`)
+    fetch(`https://hidden-mountain-15974.herokuapp.com/reviews`)
       .then((res) => res.json())
       .then((data) => {
         setReviews(data);
       });
   }, []);
-  console.log(reviews);
   return (
     <div>
       <header>
@@ -20,10 +19,10 @@ const Review = () => {
         <div className="row row-cols-1 row-cols-md-2 g-4 mb-5">
           {reviews.map((review) => (
             <div className="col-lg-3 g-4">
-              <div class="card h-100 border-primary mb-3 ">
-                <div class="card-header text-center">{review.Name}</div>
-                <div class="card-body text-primary">
-                  <p class="card-text">{review.review}</p>
+              <div className="card h-100 border-primary mb-3 ">
+                <div className="card-header text-center">{review.Name}</div>
+                <div className="card-body text-primary">
+                  <p className="card-text">{review.review}</p>
                   <Rating name="read-only" value={parseInt(review.rating)} />
                 </div>
               </div>

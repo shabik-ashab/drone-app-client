@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import useAuth from "../../../hooks/useAuth";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
 const ManageOrder = () => {
-  const { user } = useAuth();
   const [orders, setOrders] = useState([]);
 
   const [status, setStatus] = React.useState("");
@@ -18,7 +16,7 @@ const ManageOrder = () => {
   //   const { handleStatus, shipping, status } = props;
 
   useEffect(() => {
-    const url = `http://localhost:5000/order`;
+    const url = `https://hidden-mountain-15974.herokuapp.com/order`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setOrders(data));
@@ -28,7 +26,7 @@ const ManageOrder = () => {
     const newState = {
       state: state,
     };
-    const url = `http://localhost:5000/orders/${id}`;
+    const url = `https://hidden-mountain-15974.herokuapp.com/orders/${id}`;
     fetch(url, {
       method: "PUT",
       headers: {
@@ -38,7 +36,7 @@ const ManageOrder = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.modifiedCount == 1) {
+        if (data.modifiedCount === 1) {
           alert("changed sucessfully");
         }
         // alert("");
@@ -48,22 +46,20 @@ const ManageOrder = () => {
 
   // delete order
   const handledelete = (id) => {
-    const confirmBox = window.confirm(
-        "Do you want to cancel your Order"
-      )
-      if (confirmBox === true) {
-    const url = `http://localhost:5000/order/${id}`;
-    fetch(url, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.deletedCount > 0) {
-          alert("Canceled sucessfully");
-          const remaining = orders.filter((pd) => pd._id !== id);
-          setOrders(remaining);
-        }
-      });
+    const confirmBox = window.confirm("Do you want to cancel your Order");
+    if (confirmBox === true) {
+      const url = `https://hidden-mountain-15974.herokuapp.com/order/${id}`;
+      fetch(url, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.deletedCount > 0) {
+            alert("Canceled sucessfully");
+            const remaining = orders.filter((pd) => pd._id !== id);
+            setOrders(remaining);
+          }
+        });
     }
   };
 
@@ -104,7 +100,7 @@ const ManageOrder = () => {
                 <TableCell align="right">{row.address}</TableCell>
                 <TableCell align="right">{row.zip}</TableCell>
                 <TableCell className="pd-img" align="right">
-                  <img src={row.img} className="img-fluid " />
+                  <img alt=" " src={row.img} className="img-fluid " />
                   {row.serviceName}
                 </TableCell>
                 <TableCell align="right">{row.price} $</TableCell>
@@ -149,20 +145,20 @@ const ManageOrder = () => {
                 } */}
 
                 <TableCell align="right">
-                  <div class="btn-group">
+                  <div className="btn-group">
                     <button
                       type="button"
-                      class="btn btn-primary dropdown-toggle"
+                      className="btn btn-primary dropdown-toggle"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
                       {row.status}
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul className="dropdown-menu">
                       <li>
                         <a
                           onClick={() => handleStatus("Pending", `${row._id}`)}
-                          class="dropdown-item"
+                          className="dropdown-item"
                           href="#"
                         >
                           Pending
@@ -171,7 +167,7 @@ const ManageOrder = () => {
                       <li>
                         <a
                           onClick={() => handleStatus("Shipped", `${row._id}`)}
-                          class="dropdown-item"
+                          className="dropdown-item"
                           href="#"
                         >
                           Shipped
@@ -181,7 +177,11 @@ const ManageOrder = () => {
                   </div>
                 </TableCell>
                 <TableCell align="right">
-                  <Button onClick={() => handledelete(row._id)} variant="outlined" color="error">
+                  <Button
+                    onClick={() => handledelete(row._id)}
+                    variant="outlined"
+                    color="error"
+                  >
                     Cancel
                   </Button>
                 </TableCell>

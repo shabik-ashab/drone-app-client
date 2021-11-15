@@ -18,6 +18,7 @@ import useAuth from '../../hooks/useAuth';
 import Payment from "./Payment/Payment";
 import UserReview from "./UserReview/UserReview";
 import ManageProduct from "./ManageProduct/ManageProduct";
+import AdminRoute from "../AdminRoute/AdminRoute";
 
 const drawerWidth = 200;
 
@@ -184,22 +185,22 @@ function Dashboard(props) {
           <Route exact path={path}>
             <MyOrder />
           </Route>
-          <Route path={`${path}/makeAdmin`}>
+          <AdminRoute  path={`${path}/makeAdmin`}>
             <MakeAdmin />
-          </Route>
-          <Route path={`${path}/manageOrder`}>
+          </AdminRoute >
+          <AdminRoute  path={`${path}/manageOrder`}>
             <ManageOrder              
             ></ManageOrder>
-          </Route>
+          </AdminRoute >
           <Route path={`${path}/payment`}>
             <Payment />
           </Route>
           <Route path={`${path}/userReview`}>
             <UserReview />
           </Route>
-          <Route path={`${path}/manageProduct`}>
+          <AdminRoute path={`${path}/manageProduct`}>
             <ManageProduct />
-          </Route>
+          </AdminRoute >
           {/* <AdminRoute path={`${path}/addDoctor`}>
                         <AddDoctor></AddDoctor>
                     </AdminRoute> */}

@@ -1,4 +1,6 @@
 import React from 'react';
+import Contact from '../Contact/Contact';
+import Footer from '../Footer.jsx/Footer';
 import Navbar from '../Navbar/Navbar';
 import Products from '../Products/Products';
 import Banner from './Banner/Banner'
@@ -15,6 +17,9 @@ const Home = () => {
             >
             </Products>
             <Review />
+            <Contact />
+            <Footer />
+            
         </div>
     )
 }

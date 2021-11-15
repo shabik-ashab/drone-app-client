@@ -2,7 +2,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import './App.css';
 import Home from "./components/Home/Home";
@@ -11,7 +10,6 @@ import PlaceOrder from "./components/PlaceOrder/PlaceOrder";
 import Products from "./components/Products/Products";
 import AuthProvider from "./contexts/AuthProvider";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import {useState , createContext } from 'react';
 import Register from "./components/Login/Register/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 

@@ -14,7 +14,7 @@ const Login = () => {
     useAuth();
 
   const handleGoogleLogin = () => {
-    signInUsingGoogle(location, history)
+    signInUsingGoogle(location, history);
   };
   const handleLoginSubmit = (e) => {
     loginUser(loginData.email, loginData.password, location, history);
@@ -32,8 +32,8 @@ const Login = () => {
       <header>
         <h1 className="text-center mt-3  mb-5">Login</h1>
       </header>
-      <div class="container">
-        <div class="row">
+      <div className="container">
+        <div className="row">
           <div className="col-lg-6 col-md-12">
             {!isLoading && (
               <form onSubmit={handleLoginSubmit} className="ms-5 mt-5">
@@ -68,7 +68,13 @@ const Login = () => {
                   <Button variant="text">New User? Please Register</Button>
                 </NavLink>
                 <br />
-                <Button className="mt-2" onClick={handleGoogleLogin} variant="contained">Google Sign In</Button>
+                <Button
+                  className="mt-2"
+                  onClick={handleGoogleLogin}
+                  variant="contained"
+                >
+                  Google Sign In
+                </Button>
               </form>
             )}
             {isLoading && <CircularProgress />}
@@ -76,10 +82,9 @@ const Login = () => {
               <Alert severity="success">Login successfully!</Alert>
             )}
             {authError && <Alert severity="error">{authError}</Alert>}
-                    
           </div>
           <div className="col-lg-6 col-md-12">
-            <img src={img} className="img-fluid" />
+            <img alt=" " src={img} className="img-fluid" />
           </div>
         </div>
       </div>

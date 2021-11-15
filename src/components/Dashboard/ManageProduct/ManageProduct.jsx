@@ -16,7 +16,7 @@ const ManageProduct = () => {
   const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/products`)
+    fetch(`https://hidden-mountain-15974.herokuapp.com/products`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
@@ -26,7 +26,7 @@ const ManageProduct = () => {
   const handledelete = (id) => {
     const confirmBox = window.confirm("Do you want to cancel your Order");
     if (confirmBox === true) {
-      const url = `http://localhost:5000/products/${id}`;
+      const url = `https://hidden-mountain-15974.herokuapp.com/products/${id}`;
       fetch(url, {
         method: "DELETE",
       })
@@ -42,13 +42,14 @@ const ManageProduct = () => {
   };
 
   const onSubmit = (data) => {
-    axios.post('http://localhost:5000/products',data)
-    .then( res => {
-        if(res.data.insertedId){
-            alert('added sucessfully');
-            reset();
+    axios
+      .post("https://hidden-mountain-15974.herokuapp.com/products", data)
+      .then((res) => {
+        if (res.data.insertedId) {
+          alert("added sucessfully");
+          reset();
         }
-    })
+      });
   };
   return (
     <div>
@@ -74,7 +75,7 @@ const ManageProduct = () => {
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell className="pd-img" component="th" scope="row">
-                        <img src={row.img} className="img-fluid " />
+                        <img alt=" " src={row.img} className="img-fluid " />
                         {row.name}
                       </TableCell>
                       <TableCell align="right">{row.price} $</TableCell>
@@ -132,7 +133,9 @@ const ManageProduct = () => {
               />
               <br />
 
-              <Button type="submit" variant="contained">SUBMIT</Button>
+              <Button type="submit" variant="contained">
+                SUBMIT
+              </Button>
             </form>
           </div>
         </div>
