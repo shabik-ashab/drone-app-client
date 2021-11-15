@@ -7,39 +7,29 @@ import {
 import './App.css';
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
-import Navbar from "./components/Navbar/Navbar";
 import PlaceOrder from "./components/PlaceOrder/PlaceOrder";
 import Products from "./components/Products/Products";
 import AuthProvider from "./contexts/AuthProvider";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import {useState , createContext } from 'react';
 import Register from "./components/Login/Register/Register";
+import Dashboard from "./components/Dashboard/Dashboard";
 
-
-// create and export context api 
-export const CardContext = createContext('card')
 
 function App() {
-  // handleClick function from header that helps with load different data on different copononenst 
-  const [card, setCard] = useState('home');
-   const handleClick = (name) =>{
-    setCard(name)
-   }
+ 
   return (
-    <CardContext.Provider value={card}>
     <div className="App">
      <AuthProvider>
      <Router>
-        <Navbar handleClick={handleClick}
-        >
-        </Navbar>
+
         <Switch>
         <Route exact path="/">
-            <Home handleClick={handleClick} 
+            <Home
             ></Home>
           </Route>
           <Route exact path="/home">
-            <Home handleClick={handleClick}
+            <Home
             ></Home>
           </Route>
           <Route exact path="/products">
@@ -53,15 +43,21 @@ function App() {
           <Route exact path="/register">
             <Register />
           </Route>
+          <PrivateRoute path="/dashboard">
+            <Dashboard  
+            ></Dashboard>
+          </PrivateRoute>
           <PrivateRoute exact path="/placeOrder/:id">
-          <PlaceOrder />
+          <PlaceOrder 
+          >
+
+          </PlaceOrder>
           </PrivateRoute >
 
         </Switch>
       </Router>
      </AuthProvider>
     </div>
-    </CardContext.Provider>
   );
 }
 

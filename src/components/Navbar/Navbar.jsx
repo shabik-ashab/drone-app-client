@@ -6,13 +6,13 @@ import logo from '../../image/logo.png'
 import { useContext } from 'react';
 import { CardContext } from '../../App';
 
-const Navbar = (props) => {
+
+const Navbar = () => {
     const {user,logOut} = useAuth();
-    console.log(user);
+    
     // // handleClick function help the state to know page location 
-    const {handleClick} = props;
     
-    
+    // onClick={() => handleClick('products')}
     return (
     <div className="header">
        <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -24,10 +24,10 @@ const Navbar = (props) => {
       <a class="navbar-brand" href="#"><img src={logo} /></a>
       <ul class="navbar-nav ms-2 me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-        <NavLink onClick={() => handleClick('home')} to="/home">Home</NavLink>
+        <NavLink  to="/home">Home</NavLink>
         </li>
         <li class="nav-item">
-        <NavLink onClick={() => handleClick('products')} to="/products">Products</NavLink>
+        <NavLink  to="/products">Products</NavLink>
         </li>
         <li class="nav-item">
         <NavLink to="/contact">Contact</NavLink>
@@ -36,7 +36,7 @@ const Navbar = (props) => {
         
           {
                  user.email?
-                ""
+                 <NavLink to="/dashboard">Dashboard</NavLink>
                  :
                 <NavLink to="/login">login</NavLink>
             }
@@ -49,9 +49,9 @@ const Navbar = (props) => {
       {
                 user.email?
                 <p className="usr d-flex pt-2 me-4"><p className="">
-                  {user?.displayName} <img src={user?.photoURL} className="w-25 p-2" />
+                  {user?.displayName} <img src={user?.photoURL} className="w-25 img-fluid" />
                 </p>
-                <Button className="ms-4" onClick={logOut} variant="outline-danger">Logout</Button>
+                <p><Button className="" onClick={logOut} variant="outline-danger">Logout</Button></p>
                 </p>
                   :
                   ""

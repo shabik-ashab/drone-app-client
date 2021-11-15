@@ -14,9 +14,7 @@ const Login = () => {
     useAuth();
 
   const handleGoogleLogin = () => {
-    signInUsingGoogle().then((result) => {
-      history.push(redirect_uri);
-    });
+    signInUsingGoogle(location, history)
   };
   const handleLoginSubmit = (e) => {
     loginUser(loginData.email, loginData.password, location, history);
@@ -69,6 +67,8 @@ const Login = () => {
                 <NavLink style={{ textDecoration: "none" }} to="/register">
                   <Button variant="text">New User? Please Register</Button>
                 </NavLink>
+                <br />
+                <Button className="mt-2" onClick={handleGoogleLogin} variant="contained">Google Sign In</Button>
               </form>
             )}
             {isLoading && <CircularProgress />}
@@ -76,6 +76,7 @@ const Login = () => {
               <Alert severity="success">Login successfully!</Alert>
             )}
             {authError && <Alert severity="error">{authError}</Alert>}
+                    
           </div>
           <div className="col-lg-6 col-md-12">
             <img src={img} className="img-fluid" />

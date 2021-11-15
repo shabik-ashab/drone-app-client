@@ -18,9 +18,7 @@ const Register = () => {
   const { signInUsingGoogle,registerUser,isLoading,authError,user } = useAuth();
 
   const handleGoogleLogin = () => {
-    signInUsingGoogle().then((result) => {
-      history.push(redirect_uri);
-    });
+    signInUsingGoogle(location, history)
   };
   const handleOnBlur = (e) => {
     const field = e.target.name;
@@ -96,12 +94,14 @@ const Register = () => {
               <NavLink style={{ textDecoration: "none" }} to="/login">
                 <Button variant="text">Already Registered? Please Login</Button>
               </NavLink>
+              <br />
+                <Button className="mt-2" onClick={handleGoogleLogin} variant="contained">Google Sign In</Button>
             </form>
 
             }
             {isLoading && <CircularProgress />}
             {user?.email && <Alert severity="success">User Created successfully!</Alert>}
-                    {authError && <Alert severity="error">{authError}</Alert>}
+                    {authError && <Alert severity="error">{authError}</Alert>}    
           </div>
           <div className="col-lg-6 col-md-12">
             <img src={img} className="img-fluid" />

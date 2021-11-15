@@ -1,17 +1,14 @@
 import React, {useEffect,useState} from 'react';
 import Button from '@mui/material/Button';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import { CardContext } from '../../App';
+import Navbar from '../Navbar/Navbar';
 
-const Products = (props) => {
-    // // handleClick function help the state to know page location 
-    const {handleClick} = props;
+const Products = () => {
     const [products, setProducts] = useState([]);
-    
-    // getting the value of card with context api 
-    // card help us to know the current page 
-    const card = useContext(CardContext);
+    const location = useLocation();
+
 
     useEffect(() => {
         fetch(`http://localhost:5000/products`)
@@ -19,20 +16,53 @@ const Products = (props) => {
             .then(data => {
                 setProducts(data);   
             });
-    }, [card]);
-    let mystyle = {
+    }, []);
+    // we will show cards in home page 
+    let navStyle = {
         display: "none"
-      };
-    // we will show cards in home page  
-    if(card === 'home'){
-        products.length = 6;
-        mystyle = {
+      }; 
+      let mystyle = {
+          display: "block"
+      }
+      if(location.pathname === '/products'){
+        navStyle = {
             display: "block"
           };
+          mystyle = {
+            display: "none"
+        }
+        products.length = products.length;
+        }
+    if(location.pathname === '/home'){
+        navStyle = {
+            display: "none"
+          };
+          mystyle = {
+            display: "block"
+        }
+    products.length = 6;
     }
-     
+    if(location.pathname === '/'){
+        navStyle = {
+            display: "none"
+          };
+          mystyle = {
+            display: "block"
+        }
+    products.length = 6;
+    }
+   
     return (
         <div>
+            {/* {
+                navbar && 
+                <Navbar
+        >
+        </Navbar>
+            } */}
+            <div style={navStyle}>
+                <Navbar />
+            </div>
             <header>
                 <h1 className="text-center mt-3  mb-5">Products</h1>
             </header>
@@ -40,7 +70,8 @@ const Products = (props) => {
             <div className="row row-cols-1 row-cols-md-2 g-4 mb-5">
                   {
                       products.map(product => 
-                        <div className="col-lg-4 g-4">
+                        <div key={product.id}
+                         className="col-lg-4 g-4">
                             <div class="card my-card h-100">
                               <img src={product.img} class="img-fluid p-2" alt="..." />
                               <div class="card-body ms-2">
@@ -58,7 +89,7 @@ const Products = (props) => {
                         )
                   }
                   <div style={mystyle}>
-                  <NavLink onClick={() => handleClick('products')}  to="/products">Explore more...</NavLink>
+                  <NavLink  to="/products">Explore more...</NavLink>
                   </div>
               </div>
             </div>

@@ -6,9 +6,10 @@ import Alert from '@mui/material/Alert';
 import axios  from 'axios';
 import useAuth from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
 
 
-const PlaceOrder = () => {
+const PlaceOrder = (props) => {
     const {user} = useAuth();
     const {id} = useParams();
     const [orders,setOrders] = useState([]);
@@ -16,6 +17,8 @@ const PlaceOrder = () => {
     const [orderSucsess,setOrderSucsess] = useState(false)
     const initialInfo = {Name: user.displayName, email: user.email, zip: '',address: '' }
     const [newOrders,setNewOrders] = useState(initialInfo);
+
+    const {handleClick} = props;
 
     useEffect(() => {
         fetch(`http://localhost:5000/products`)
@@ -53,7 +56,8 @@ const PlaceOrder = () => {
       ...newOrders,
       serviceName: orderItem.name,
       img: orderItem.img,
-      price:orderItem.price
+      price:orderItem.price,
+      status: "Pending"
   }
        axios.post('http://localhost:5000/orders',orders)
         .then( res => {
@@ -65,71 +69,73 @@ const PlaceOrder = () => {
     e.preventDefault();
   }
     return (
-        <div>
-             <header className="text-center">
-                <h1 className="text-center mt-3  ">Confirm Order</h1>
-                <p className="mb-5">{orderItem?.name}</p>
-            </header>
-            <div className="container">
-            <div className="row">
-                <div className="col-lg-4 mx-auto">
-                  
-                    {
-                      orderSucsess && <div className="mb-4">
-                        <Alert severity="success">Place order sucessfully</Alert>
-                        <Link to="/products">
-                        <Button>Shop More</Button>
-                        </Link>
-                      </div>
-                    }
-                    <form onSubmit={handleBookingSubmit}>
-                    <TextField
-          required
-          id="outlined-required"
-          label="Required"
-          name="name"
-          sx={{ mb: 2 }}
-          defaultValue={user.displayName}
-        />
-        <TextField
-            
-          id="outlined-required"
-          label="Email"
-          name="email"
-          onBlur={handleOnBlur}
-          sx={{ mb: 2 }}
-          defaultValue={user.email}
-        />
-        <TextField
-          id="filled-number"
-          label="Zip Code"
-          type="number"
-          onBlur={handleOnBlur}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          sx={{ mb: 2 }}
-          variant="filled"
-          name="zip"
-        />
-        <TextField
-          required
-          id="outlined-required"
-          label="Address"
-          sx={{ mb: 2 }}
-          defaultValue=""
-          name="address"
-          onBlur={handleOnBlur}
-        />
-        <br />
-        <Button type="submit" variant="outlined">Submit</Button>
-                    </form>
-               
+      <div>
+        <Navbar />
+        <header className="text-center">
+          <h1 className="text-center mt-3  ">Confirm Order</h1>
+          <p className="mb-5">{orderItem?.name}</p>
+        </header>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-4 mx-auto">
+              {orderSucsess && (
+                <div className="mb-4">
+                  <Alert severity="success">Place order sucessfully</Alert>
+                  <Link to="/products">
+                    <Button >
+                      Shop More
+                    </Button>
+                  </Link>
                 </div>
-            </div> 
+              )}
+              <form onSubmit={handleBookingSubmit}>
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="Name"
+                  name="name"
+                  sx={{ mb: 2 }}
+                  defaultValue={user.displayName}
+                />
+                <TextField
+                  id="outlined-required"
+                  label="Email"
+                  name="email"
+                  onBlur={handleOnBlur}
+                  sx={{ mb: 2 }}
+                  defaultValue={user.email}
+                />
+                <TextField
+                  id="filled-number"
+                  label="Zip Code"
+                  type="number"
+                  onBlur={handleOnBlur}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  sx={{ mb: 2 }}
+                  variant="filled"
+                  name="zip"
+                />
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="Address"
+                  sx={{ mb: 2 }}
+                  defaultValue=""
+                  name="address"
+                  onBlur={handleOnBlur}
+                />
+                <br />
+                <Button type="submit" variant="outlined">
+                  Submit
+                </Button>
+              </form>
             </div>
+          </div>
         </div>
-    )
+      </div>
+    );
 }
 
 export default PlaceOrder

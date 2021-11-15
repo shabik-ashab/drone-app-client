@@ -1,15 +1,20 @@
 import React from 'react';
+import Navbar from '../Navbar/Navbar';
 import Products from '../Products/Products';
 import Banner from './Banner/Banner'
+import Review from './Review/Review';
 
-const Home = (props) => {
-    const {handleClick} = props;
+const Home = () => {
     return (
         <div>
+            <Navbar 
+        >
+        </Navbar>
             <Banner />
-            <Products handleClick={handleClick}
+            <Products 
             >
             </Products>
+            <Review />
         </div>
     )
 }
